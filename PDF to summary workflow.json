@@ -1,0 +1,151 @@
+{
+  "name": "PDF to summary workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -496,
+        -128
+      ],
+      "id": "2483c19c-7646-47bb-b803-56f603f3c1e3",
+      "name": "Telegram Trigger",
+      "webhookId": "eac3c8ae-a543-494e-9f10-58863e85916c",
+      "credentials": {
+        "telegramApi": {
+          "id": "9d7ZUwoYmWqwT8is",
+          "name": "SocialEagle_n8n_journey"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -272,
+        -128
+      ],
+      "id": "49c934fc-62a3-42ec-8712-a7762d65e590",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Summarise the below input {{ $json.text }}"
+            },
+            {
+              "role": "system",
+              "content": "you are an expert in summarizing the PDF content..\n\nSummarize the content in simple human readable format with sections instead of lengthy and very short..\nEach section contains max of 2 lines."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        -48,
+        -128
+      ],
+      "id": "f309245a-0967-47af-a57b-f17e5af373a1",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "6lBzo07NcIfhlhQS",
+          "name": "Vignesh OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output[0].content[0].text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        304,
+        -128
+      ],
+      "id": "a0de38d1-1577-4a47-ac03-acaeb1828b28",
+      "name": "Send a text message",
+      "webhookId": "0653f55a-9eeb-4d75-9d41-b2a162bf604b",
+      "credentials": {
+        "telegramApi": {
+          "id": "9d7ZUwoYmWqwT8is",
+          "name": "SocialEagle_n8n_journey"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4753a8dd-21ec-4887-940c-183ba7892e2c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3da9e7b7c00bc107b834f1ca17f26178c277b594475d1e4a72654387ff1a5986"
+  },
+  "id": "4zqd2AIVQ4dYeYZo",
+  "tags": []
+}

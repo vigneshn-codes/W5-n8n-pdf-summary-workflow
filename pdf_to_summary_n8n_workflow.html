@@ -1,0 +1,127 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Space Grotesk',sans-serif}
+.wrap{padding:32px 24px 40px;background:transparent;min-height:520px}
+.title-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.badge{font-size:11px;font-weight:600;letter-spacing:.06em;padding:3px 10px;border-radius:20px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-secondary);text-transform:uppercase}
+h2{font-size:20px;font-weight:700;color:var(--color-text-primary);letter-spacing:-.02em}
+.sub{font-size:13px;color:var(--color-text-secondary);margin-bottom:28px;margin-top:4px}
+.flow{display:flex;align-items:center;gap:0;justify-content:center;flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px}
+.node-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;position:relative}
+.node{width:128px;border-radius:14px;padding:16px 12px;text-align:center;border:1.5px solid transparent;cursor:pointer;transition:transform .18s,box-shadow .18s;position:relative;overflow:hidden}
+.node:hover{transform:translateY(-3px)}
+.node-icon{font-size:26px;margin-bottom:8px;display:block}
+.node-name{font-size:12px;font-weight:700;letter-spacing:.01em;margin-bottom:3px}
+.node-desc{font-size:10.5px;opacity:.75;line-height:1.4}
+.n1{background:#EEF9F4;border-color:#34A9A9 !important;color:#0b5e5e}
+.n2{background:#EFF4FE;border-color:#5B8EF5 !important;color:#1a3c8f}
+.n3{background:#FDF3E8;border-color:#E9922F !important;color:#7a3e00}
+.n4{background:#F0EEF9;border-color:#8B70DA !important;color:#3d1e8a}
+@media(prefers-color-scheme:dark){
+  .n1{background:#0b2e2e;border-color:#34A9A9 !important;color:#7de8d5}
+  .n2{background:#0f1f4a;border-color:#5B8EF5 !important;color:#a3bcfa}
+  .n3{background:#2e1a04;border-color:#E9922F !important;color:#f5c88a}
+  .n4{background:#1e1040;border-color:#8B70DA !important;color:#c4b0f5}
+}
+.node-label{font-size:10.5px;font-weight:600;color:var(--color-text-secondary);text-align:center;max-width:130px;letter-spacing:.03em;text-transform:uppercase}
+.arrow-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:48px;flex-shrink:0;padding-top:0}
+.arrow-line{height:2px;width:36px;border-radius:2px;background:var(--color-border-secondary);position:relative;overflow:hidden}
+.arrow-dot{position:absolute;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;left:-10px;animation:slide 1.8s linear infinite}
+.d1 .arrow-dot{background:#34A9A9;animation-delay:0s}
+.d2 .arrow-dot{background:#5B8EF5;animation-delay:.6s}
+.d3 .arrow-dot{background:#E9922F;animation-delay:1.2s}
+@keyframes slide{0%{left:-10px;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:38px;opacity:0}}
+.arrow-chevron{font-size:13px;color:var(--color-text-tertiary)}
+.arrow-tag{font-size:9.5px;font-weight:600;text-align:center;padding:2px 7px;border-radius:10px;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap}
+.t1{background:#d5f4ec;color:#0b5e5e} .t2{background:#dde9fe;color:#1a3c8f} .t3{background:#fde8d0;color:#7a3e00}
+@media(prefers-color-scheme:dark){.t1{background:#0b2e2e;color:#7de8d5}.t2{background:#0f1f4a;color:#a3bcfa}.t3{background:#2e1a04;color:#f5c88a}}
+.anim-ring{position:absolute;inset:-1px;border-radius:14px;border:2px solid transparent;pointer-events:none}
+.n1 .anim-ring{animation:ring1 3s ease-in-out infinite}
+.n2 .anim-ring{animation:ring2 3s ease-in-out infinite .75s}
+.n3 .anim-ring{animation:ring3 3s ease-in-out infinite 1.5s}
+.n4 .anim-ring{animation:ring4 3s ease-in-out infinite 2.25s}
+@keyframes ring1{0%,100%{border-color:transparent}40%,60%{border-color:#34A9A9;box-shadow:0 0 8px #34A9A940}}
+@keyframes ring2{0%,100%{border-color:transparent}40%,60%{border-color:#5B8EF5;box-shadow:0 0 8px #5B8EF540}}
+@keyframes ring3{0%,100%{border-color:transparent}40%,60%{border-color:#E9922F;box-shadow:0 0 8px #E9922F40}}
+@keyframes ring4{0%,100%{border-color:transparent}40%,60%{border-color:#8B70DA;box-shadow:0 0 8px #8B70DA40}}
+.footer{margin-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary);background:var(--color-background-secondary)}
+.built-tag{font-size:11px;color:var(--color-text-tertiary);font-weight:500}
+</style>
+<div class="wrap">
+  <div class="title-row">
+    <span class="badge">n8n workflow</span>
+  </div>
+  <h2>PDF → Summary Bot</h2>
+  <p class="sub">Send a PDF to Telegram. Get an instant AI-generated summary.</p>
+
+  <div class="flow">
+    <div class="node-wrap">
+      <div class="node n1">
+        <div class="anim-ring"></div>
+        <span class="node-icon">📲</span>
+        <div class="node-name">Telegram Trigger</div>
+        <div class="node-desc">Receives PDF from user</div>
+      </div>
+      <span class="node-label">Input</span>
+    </div>
+
+    <div class="arrow-wrap">
+      <div class="arrow-line d1"><div class="arrow-dot"></div></div>
+      <span class="arrow-tag t1">PDF file</span>
+    </div>
+
+    <div class="node-wrap">
+      <div class="node n2">
+        <div class="anim-ring"></div>
+        <span class="node-icon">📄</span>
+        <div class="node-name">Extract from File</div>
+        <div class="node-desc">Parses raw text from PDF</div>
+      </div>
+      <span class="node-label">Transform</span>
+    </div>
+
+    <div class="arrow-wrap">
+      <div class="arrow-line d2"><div class="arrow-dot"></div></div>
+      <span class="arrow-tag t2">raw text</span>
+    </div>
+
+    <div class="node-wrap">
+      <div class="node n3">
+        <div class="anim-ring"></div>
+        <span class="node-icon">🧠</span>
+        <div class="node-name">GPT-4o Mini</div>
+        <div class="node-desc">Generates structured summary</div>
+      </div>
+      <span class="node-label">AI Model</span>
+    </div>
+
+    <div class="arrow-wrap">
+      <div class="arrow-line d3"><div class="arrow-dot"></div></div>
+      <span class="arrow-tag t3">summary</span>
+    </div>
+
+    <div class="node-wrap">
+      <div class="node n4">
+        <div class="anim-ring"></div>
+        <span class="node-icon">💬</span>
+        <div class="node-name">Send Message</div>
+        <div class="node-desc">Replies to user on Telegram</div>
+      </div>
+      <span class="node-label">Output</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="pill-row">
+      <span class="pill">⚡ n8n</span>
+      <span class="pill">🤖 OpenAI</span>
+      <span class="pill">✈️ Telegram Bot</span>
+      <span class="pill">📑 PDF Parser</span>
+    </div>
+    <span class="built-tag">Automated · Zero Code · Instant</span>
+  </div>
+</div>
